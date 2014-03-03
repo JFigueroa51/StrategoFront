@@ -1,4 +1,6 @@
+import javax.swing.JPanel;
 
-public class SideBoard {
+
+public class SideBoard extends JPanel{
 	
 }
