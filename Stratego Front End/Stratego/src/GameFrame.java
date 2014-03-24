@@ -13,7 +13,7 @@ public class GameFrame extends JFrame {
 	public GameFrame(){
 		super();
 		board = new Board(10, 10);
-		sideboard = new SideBoard();
+		sideboard = new SideBoard(true);
 		setup();
 		
 	}
