@@ -22,7 +22,7 @@ public class Board extends JPanel {
 	private void populateBoard() {
 		for(int i = 0 ; i < width; i++){
 			for(int j = 0; j < height; j++){
-				buttonArray[i][j] = new PieceButton(new Piece(0));
+				this.buttonArray[i][j] = new PieceButton(new Piece(0));
 				this.add(buttonArray[i][j]);
 			}
 		}
