@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
@@ -39,6 +40,110 @@ public class Board extends JPanel {
 	public boolean getSetup(){
 		return setup;
 	}
+	
+
+	private boolean isLegalMove(Piece source, Piece dest) {
+		if(source.getTeam() == dest.getTeam() || source.getType() == 11 || source.getType() == 12){
+			source.setClicked(false);
+			return false;
+		}
+		if(dest.getTeam() == 2){
+			//TODO
+			try {
+				combat(source, dest);
+			} catch (IWINException e) {
+				// TODO Auto-generated catch block
+				 JOptionPane.showMessageDialog(null, "YOU WIN!!!");
+			}catch (Exception e){
+				return false;
+			}
+			return true;
+		}
+		int sourceX = source.getButton().getArrayX();
+		int sourceY = source.getButton().getArrayY();
+		int destX = dest.getButton().getArrayX();
+		int destY = dest.getButton().getArrayY();
+		if(source.getType() != 2){
+			if(Math.abs(sourceX-destX) + Math.abs(sourceY-destY) <= 1){
+				return true;
+			}
+			return false;
+		}else{
+			if(sourceX - destX == 0 ||sourceY-destY == 0)
+				return true;
+			return false;
+		}
+		
+		
+	}
+	
+
+	private void combat(Piece source, Piece dest) throws TeleportationException, BattleLossException, IWINException{
+		if(dest.getType() == 12){
+			throw new IWINException();
+		}
+		
+		int st= source.getType();
+		int dt = dest.getType();
+		
+		switch (st){
+		case 2:// make sure that the piece did not "teleport"
+			int sX = source.getButton().getArrayX();
+			int dX = dest.getButton().getArrayX();
+			
+			int sY = source.getButton().getArrayY();
+			int dY = dest.getButton().getArrayY();
+			if(sX - dX == 0){
+				int maxy = Math.max(sY ,dY);
+				int miny = Math.min(sY ,dY);
+				for(int i = miny + 1; i< maxy ; i++){
+					if(buttonArray[sX][i].getPiece().getType() != 0){
+						throw new TeleportationException();
+					}
+				}
+			}else{
+				int maxx = Math.max(sX, dX);
+				int minx = Math.min(sX, dX);
+				for(int i = minx + 1; i< maxx ; i++){
+					if(buttonArray[i][sY].getPiece().getType() != 0){
+						throw new TeleportationException();
+					}
+				}
+			}
+			
+		case 1:
+			if(dt == 10){
+				st = Integer.MAX_VALUE;
+			}
+		default:
+			
+		}
+
+		if(st> dt){
+			dest.setType(0);
+			dest.setTeam(0);
+		}else if (st == dt){
+			dest.setType(0);
+			dest.setTeam(0);
+			
+			source.setType(0);
+			source.setTeam(0);
+		}else{
+			source.setClicked(false);
+			source.setType(0);
+			source.setTeam(0);
+			source.getButton().update();
+			throw new BattleLossException();
+		}
+	}
+	
+	private boolean validSetupPlacement(
+			PieceButton b) {
+		if(b.getArrayX()<6 || b.getPiece().getTeam() != 0)
+			return false;
+		return true;
+	}
+
 	private void populateBoard() {
 		for(int i = 0 ; i < width; i++){
 			for(int j = 0; j < height; j++){
@@ -84,41 +189,7 @@ public class Board extends JPanel {
 						}
 					}
 
-					private boolean isLegalMove(Piece source, Piece dest) {
-						if(source.getTeam() == dest.getTeam())
-							return false;
-						if(dest.getTeam() == 2){
-							//TODO
-							combat(source, dest);
-							return true;
-						}
-						int sourceX = source.getButton().getArrayX();
-						int sourceY = source.getButton().getArrayY();
-						int destX = dest.getButton().getArrayX();
-						int destY = dest.getButton().getArrayY();
-						if(source.getType() != 2){
-							if(Math.abs(sourceX-destX) + Math.abs(sourceY-destY) <= 1){
-								return true;
-							}
-							return false;
-						}else{
-							if(sourceX - destX == 0 ||sourceY-destY == 0)
-								return true;
-							return false;
-						}
-						
-						
-					}
-					private void combat(Piece source, Piece dest){
-						
-					}
 
-					private boolean validSetupPlacement(
-							PieceButton b) {
-						if(b.getArrayX()<6 || b.getPiece().getTeam() != 0)
-							return false;
-						return true;
-					}
 
 					@Override
 					public void mouseEntered(MouseEvent arg0) {
@@ -145,5 +216,15 @@ public class Board extends JPanel {
 		
 	}
 
+	
+}
+class TeleportationException extends Exception{
+	
+}
+class BattleLossException extends Exception{
+	
+}
+class IWINException extends Exception{
+	public boolean getwin(){return true; }
 	
 }

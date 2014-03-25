@@ -18,6 +18,14 @@ public class Piece {
 		}
 		
 	}
+	
+	public Piece(int type, int team){
+		//this.alive = false;
+		this.type = type;
+		this.clicked = false;
+		this.team = team;
+		
+	}
 	public int getTeam(){
 		return team;
 	}
@@ -56,6 +64,10 @@ public class Piece {
 	
 	PieceButton getButton(){
 		return button;
+	}
+	public void setTeam(int i) {
+		team = i;
+		
 	}
 	
 	

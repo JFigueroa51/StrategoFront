@@ -263,7 +263,7 @@ public class GameFrame extends JFrame {
 					k++;
 					
 				}else{
-					board.setPiece(j, i, new Piece(p));
+					board.setPiece(j, i, new Piece(p, 2));
 				}
 					
 			}
