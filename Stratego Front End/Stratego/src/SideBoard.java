@@ -1,6 +1,10 @@
-import java.awt.Button;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -18,10 +22,14 @@ public class SideBoard extends JPanel{
 	private JButton randomize;
 	private JButton reset;
 	private JButton load;
-	private int[] pieces = {1, 2,2,2,2,2,2,2,2};
+	private JButton[] buttons;
 	
-	public SideBoard(boolean setup){
+	private Piece[] pieces;
+	
+	public SideBoard(boolean setup, Piece[] pcs, JButton[] bts){
 		this.setup = setup;
+		this.pieces = pcs;
+		this.buttons = bts;
 		c = new GridBagConstraints();
 		this.setLayout(new GridBagLayout());
 		if(this.setup = true){
@@ -36,22 +44,55 @@ public class SideBoard extends JPanel{
 		}
 	}
 	private void addButtons(){
-		start = new JButton("start");
+		start = buttons[0];
 		this.add(start,c);
 		c.gridx = 1;
-		randomize = new JButton("randomize");
+		randomize = buttons[3];
 		this.add(randomize,c);
 		c.gridx = 2;
-		reset = new JButton("reset");
+		reset = buttons[1];
 		this.add(reset,c);
 		c.gridx = 3;
-		load = new JButton("load");
+		load = buttons[2];
 		this.add(load,c);
 	}
 	private void initialSetup() {
+		int k = 0;
 		for(int j = 0; j< height; j++){
 			for(int i = 0;i<width; i++){
-				this.setupPieces[i][j] = new PieceButton(new Piece(0));
+				this.setupPieces[i][j] = new PieceButton(pieces[k++], i , j);
+				setupPieces[i][j].addMouseListener( new MouseListener(){
+
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						PieceButton clickedButton = ((PieceButton) e.getSource());
+						if(clickedButton.getBackground() != Color.BLACK){
+							clickedButton.getPiece().setClicked(true);
+							clickedButton.setBackground(Color.GREEN);
+						}
+						
+					}
+
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					public void mouseExited(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					public void mousePressed(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+				});
 				c.gridx = i;
 				c.gridy = j+ 1;
 				this.add(setupPieces[i][j], c);

@@ -1,14 +1,26 @@
 
 public class Piece {
 	private int type;
-	private boolean alive;
+	//private boolean alive;
+	private boolean clicked;
 	private String imageLink;
+	private PieceButton button;
+	private int team;
 	
 	public Piece(int type){
-		this.alive = false;
+		//this.alive = false;
 		this.type = type;
+		this.clicked = false;
+		if(type != 0 ){
+			team = 1;
+		}else{
+			team = 0;
+		}
+		
 	}
-	
+	public int getTeam(){
+		return team;
+	}
 	public Piece(int type, String link){
 		this(type);
 		this.imageLink = link;
@@ -22,12 +34,12 @@ public class Piece {
 		this.type = type;
 	}
 
-	public boolean isAlive() {
-		return alive;
+	public boolean isClicked() {
+		return clicked;
 	}
 
-	public void setAlive(boolean alive) {
-		this.alive = alive;
+	public void setClicked(boolean c) {
+		this.clicked = c;
 	}
 
 	public String getImageLink() {
@@ -38,7 +50,13 @@ public class Piece {
 		this.imageLink = imageLink;
 	}
 	
+	public void setButton(PieceButton b){
+		this.button = b;
+	}
 	
+	PieceButton getButton(){
+		return button;
+	}
 	
 	
 }
