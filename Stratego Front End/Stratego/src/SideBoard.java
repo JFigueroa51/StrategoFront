@@ -100,5 +100,14 @@ public class SideBoard extends JPanel{
 		}
 		
 	}
+	
+	public void paintBlack(){
+		for(int j = 0 ; j < height; j++){
+			for(int i = 0; i < width; i++){
+				setupPieces[i][j].setBackground(Color.black);
+				setupPieces[i][j].setPiece(new Piece(0));
+			}
+		}
+	}
 }
 

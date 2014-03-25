@@ -44,6 +44,7 @@ public class GameFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				board.setSetup(false);
+				sideboard.paintBlack();
 				
 			}
 
@@ -115,6 +116,7 @@ public class GameFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				loadSetup(true);
+				sideboard.paintBlack();
 				
 			}
 
