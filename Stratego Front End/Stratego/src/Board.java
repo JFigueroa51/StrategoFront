@@ -79,6 +79,8 @@ public class Board extends JPanel {
 	
 
 	private void combat(Piece source, Piece dest) throws TeleportationException, BattleLossException, IWINException{
+		source.setIsDiscovered(true);
+		dest.setIsDiscovered(true);
 		if(dest.getType() == 12){
 			throw new IWINException();
 		}
@@ -169,7 +171,7 @@ public class Board extends JPanel {
 								
 							}
 							else if(p.isClicked() && isLegalMove(p, clickedButton.getPiece())){
-								
+								p.setHasMoved(true);
 								p.setClicked(false);
 								//p.getButton().setBackground(clickedButton.getBackground());
 								Piece temp = new Piece(clickedButton.getPiece().getType());
@@ -177,7 +179,7 @@ public class Board extends JPanel {
 								p.getButton().setPiece(temp);
 								temp.setButton(p.getButton());
 								p.setButton(clickedButton);	
-								
+								aIMove();
 								return;
 							}
 								
@@ -215,8 +217,32 @@ public class Board extends JPanel {
 		}
 		
 	}
-
 	
+	public void aIMove(){
+		
+		//Write to files
+		
+		
+		
+		//TODO RYAN!
+		callACL2();
+		//Read from files
+		
+		
+		//TODO JORGE!
+		updateBoard(null);
+		
+	}
+	
+	private void updateBoard(Piece[][] npcs){
+		//TODO
+	}
+	private void callACL2(){
+		
+	}
+	public PieceButton[][] getButtonArray(){
+		return this.buttonArray;
+	}
 }
 class TeleportationException extends Exception{
 	

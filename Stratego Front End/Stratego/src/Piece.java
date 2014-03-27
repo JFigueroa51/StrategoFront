@@ -5,11 +5,15 @@ public class Piece {
 	private boolean clicked;
 	private String imageLink;
 	private PieceButton button;
-	private int team;
+	private int team;// 1 for player 1, 2 for AI, 0 for non-player (environment or obstacles)
+	private int hasMoved;
+	private int isDiscovered;
 	
 	public Piece(int type){
 		//this.alive = false;
 		this.type = type;
+		this.isDiscovered = 0;
+		this.hasMoved = 0;
 		this.clicked = false;
 		if(type != 0 ){
 			team = 1;
@@ -24,8 +28,33 @@ public class Piece {
 		this.type = type;
 		this.clicked = false;
 		this.team = team;
-		
+		this.isDiscovered = 0;
+		this.hasMoved = 0;
 	}
+	public int getHasMoved(){
+		return this.hasMoved;
+	}
+	
+	public int getIsDiscovered(){
+		return this.isDiscovered;
+	}
+	
+	public void setHasMoved(boolean m){
+		if (m ){
+			this.hasMoved = 1;
+			return;
+		}
+		this.hasMoved = 0;
+	}
+	
+	public void setIsDiscovered(boolean d){
+		if (d){
+			this.isDiscovered = 1;
+			return;
+		}
+		this.isDiscovered = 0;
+	}
+	
 	public int getTeam(){
 		return team;
 	}

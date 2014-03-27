@@ -45,24 +45,25 @@ public class GameFrame extends JFrame {
 			public void mouseClicked(MouseEvent arg0) {
 				board.setSetup(false);
 				sideboard.paintBlack();
+				//TODO Write both files for ACL2
 				
 			}
 
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
+			
 				
 			}
 
 			@Override
 			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 
@@ -86,25 +87,25 @@ public class GameFrame extends JFrame {
 
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
+
 				
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
+
 				
 			}
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
+
 				
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
+
 				
 			}
 			
@@ -122,7 +123,7 @@ public class GameFrame extends JFrame {
 
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
+
 				
 			}
 
