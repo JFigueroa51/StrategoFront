@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
@@ -14,9 +15,14 @@ public class Board extends JPanel {
 	private int height;
 	private Piece[] pieces;
 	private boolean setup;
+	private static String aiString;
+	private static String ppString;
+	private static IO_Operations io;
 
 	public Board(int width, int height, Piece[] pieces) {
 		super();
+		aiString = "boardFile.txt";
+		ppString = "knowledgeFile.txt";
 		setup = true;
 		this.pieces = pieces;
 		this.width = width;
@@ -24,6 +30,8 @@ public class Board extends JPanel {
 		this.buttonArray = new PieceButton[width][height];
 		this.setLayout(new GridLayout(width, height));
 		this.setBorder(BorderFactory.createEtchedBorder(1));
+		io = new IO_Operations(aiString, ppString, aiString, ppString, width);//remember to fix
+		
 		populateBoard();
 	}
 	public void setSetup(boolean s){
@@ -145,6 +153,12 @@ public class Board extends JPanel {
 			return false;
 		return true;
 	}
+	
+	public IO_Operations getIO()
+	{
+		return io;
+	}
+
 
 	private void populateBoard() {
 		for(int i = 0 ; i < width; i++){
@@ -179,7 +193,12 @@ public class Board extends JPanel {
 								p.getButton().setPiece(temp);
 								temp.setButton(p.getButton());
 								p.setButton(clickedButton);	
-								aIMove();
+								try {
+									aIMove();
+								} catch (IOException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
 								return;
 							}
 								
@@ -218,15 +237,44 @@ public class Board extends JPanel {
 		
 	}
 	
-	public void aIMove(){
+	public void aIMove() throws IOException{
 		
 		//Write to files
+		try {
+			io.writePieceData(getButtonArray(), "b");
+			io.writePieceData(getButtonArray(), "k");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		
 		
 		//TODO RYAN!
 		callACL2();
 		//Read from files
+		//This is how you read from board data from file
+		Piece boardData[] = io.readPieceData("b");
+		 for (int x = 0; x < boardData.length; ++x)
+		 {
+			 Piece button = boardData[x];
+			 System.out.println("Position: "+ button.getAcl2Position() + " Type: " + button.getType()); 
+	 
+		 }
+		 
+		 //This is how you read knowledge data from file
+		 //I commented it out for testing purposes.
+		 /*****
+		 Piece knowledgeData[] = io.readPieceData("k");
+		 for (int x = 0; x < knowledgeData.length; ++x)
+		 {
+			 Piece button = knowledgeData[x];
+			 System.out.println("Position: " + button.getAcl2Position() + " Type: " + button.getType() + " hasMoved: " + button.getHasMoved() + " isDiscovered: " + button.getIsDiscovered()); 
+	 
+		 }
+		 
+		 ***/
 		
 		
 		//TODO JORGE!
@@ -243,7 +291,14 @@ public class Board extends JPanel {
 	public PieceButton[][] getButtonArray(){
 		return this.buttonArray;
 	}
+	
+	public int getButtonArraySize(){
+		return buttonArray.length;
+	}
 }
+
+
+
 class TeleportationException extends Exception{
 	
 }

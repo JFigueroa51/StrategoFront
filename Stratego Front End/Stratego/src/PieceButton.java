@@ -24,6 +24,10 @@ public class PieceButton extends JButton {
 	public int getArrayY(){
 		return y;
 	}
+	
+	public int getType(){
+		return piece.getType();
+	}
 	public Piece getPiece() {
 		return piece;
 	}
@@ -38,5 +42,10 @@ public class PieceButton extends JButton {
 		}else{
 			this.setText("");
 		}
+	}
+	
+	public int getPosition()
+	{
+		return (y * 10) + x + 1; //fix constant value
 	}
 }

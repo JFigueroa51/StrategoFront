@@ -8,6 +8,7 @@ public class Piece {
 	private int team;// 1 for player 1, 2 for AI, 0 for non-player (environment or obstacles)
 	private int hasMoved;
 	private int isDiscovered;
+	private int acl2Position;
 	
 	public Piece(int type){
 		//this.alive = false;
@@ -15,6 +16,7 @@ public class Piece {
 		this.isDiscovered = 0;
 		this.hasMoved = 0;
 		this.clicked = false;
+		this.acl2Position = 0;
 		if(type != 0 ){
 			team = 1;
 		}else{
@@ -23,13 +25,33 @@ public class Piece {
 		
 	}
 	
-	public Piece(int type, int team){
+	public Piece(int type, int team, int acl2Position){
 		//this.alive = false;
 		this.type = type;
 		this.clicked = false;
 		this.team = team;
 		this.isDiscovered = 0;
 		this.hasMoved = 0;
+		this.acl2Position = acl2Position;
+	}
+	
+	public Piece(int type, int team, int hasMoved, int isDiscovered, int acl2Position){
+		//this.alive = false;
+		this.type = type;
+		this.clicked = false;
+		this.team = team;
+		this.isDiscovered = isDiscovered;
+		this.hasMoved = hasMoved;
+		this.acl2Position = acl2Position;
+		
+	}
+	
+	public void setAcl2Position(int acl2Position){
+		this.acl2Position = acl2Position;
+	}
+	
+	public int getAcl2Position(){
+		return acl2Position;
 	}
 	public int getHasMoved(){
 		return this.hasMoved;
@@ -98,6 +120,8 @@ public class Piece {
 		team = i;
 		
 	}
+	
+	
 	
 	
 }

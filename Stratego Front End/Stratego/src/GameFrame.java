@@ -23,8 +23,9 @@ public class GameFrame extends JFrame {
 	private int[] pcs = {1,2,2,2,2,2,2,2,2,3,3,3,3,3,4,4,4,4,5,5,5,5,6,6,6,6,7,7,7,8,8,9,10,11,11,11,11,11,11,12};
 	private int[] pcs2 = {1,2,2,2,2,2,2,2,2,3,3,3,3,3,4,4,4,4,5,5,5,5,6,6,6,6,7,7,7,8,8,9,10,11,11,11,11,11,11,12};
 	private JButton[] bts;
-	private static final String aiString = "C:\\Users\\Jorge\\Desktop\\aiStart.txt";
-	private static final String ppString = "C:\\Users\\Jorge\\Desktop\\PlayerStart.txt";
+	private static final String aiString = "aiStart.txt";
+	private static final String ppString = "PlayerStart.txt";
+	
 	
 	
 	public GameFrame(){
@@ -46,6 +47,18 @@ public class GameFrame extends JFrame {
 				board.setSetup(false);
 				sideboard.paintBlack();
 				//TODO Write both files for ACL2
+				//Write to files
+				
+				try {
+					board.getIO().writePieceData(board.getButtonArray(), "b");
+					board.getIO().writePieceData(board.getButtonArray(), "k");
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
 				
 			}
 
@@ -241,7 +254,7 @@ public class GameFrame extends JFrame {
 		try{	
 			
 			if(side){//player 1
-				Scanner input = new Scanner(new File(ppString));
+				Scanner input = new Scanner(new File(aiString));
 				setupFile(input, 1);
 			}else{//AI Player	
 				Scanner input = new Scanner(new File(aiString));
@@ -266,7 +279,7 @@ public class GameFrame extends JFrame {
 					k++;
 					
 				}else{
-					board.setPiece(j, i, new Piece(p, 2));
+					board.setPiece(j, i, new Piece(p, 2, 0)); //constructor has changed
 				}
 					
 			}
@@ -308,6 +321,13 @@ public class GameFrame extends JFrame {
 		   try {writer.close();} catch (Exception ex) {}
 		}
 	}
+	
+	
+	public String position(int x, int y)
+	{
+		return String.valueOf((y * 10) + x + 1);
+	}
+	
 	public static void main(String[] args){
 		GameFrame frame = new GameFrame();
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
