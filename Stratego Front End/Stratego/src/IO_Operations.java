@@ -214,12 +214,17 @@ public void writePieceData(PieceButton[][] arrData, String call) throws IOExcept
 	
 	public Piece splitBoardTokens(String token){
 		
+		
 		int team = 1; //team parameter might be added to recognize ai team
 		StringTokenizer st = new StringTokenizer(token, " ");
 		String p = st.nextToken();
 		int position = convertStrToInt(p);
 		String t = st.nextToken();
 		int type = convertStrToInt(t);
+		if(type > 13){
+			team = 2;
+			type = type - 13;
+		}
 		Piece piece = new Piece(type, team, position);
 		return piece;
 		
@@ -232,6 +237,10 @@ public Piece splitKnowledgeFileTokens(String token){
 		int position = convertStrToInt(p);
 		String t = st.nextToken();
 		int type = convertStrToInt(t);
+		if(type > 13){
+			team = 2;
+			type = type - 13;
+		}
 		int hasMoved  = convertStrToInt(st.nextToken());
 		int isDiscovered = convertStrToInt(st.nextToken());
 		Piece piece = new Piece(type, team, isDiscovered, hasMoved, position);

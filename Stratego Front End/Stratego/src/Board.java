@@ -278,12 +278,28 @@ public class Board extends JPanel {
 		
 		
 		//TODO JORGE!
-		updateBoard(null);
+		updateBoard(boardData);
 		
 	}
 	
-	private void updateBoard(Piece[][] npcs){
-		//TODO
+	private void updateBoard(Piece[] npcs){
+		int k = 0;
+		for(PieceButton[] pb: buttonArray){
+			for(PieceButton pbb: pb){
+				pbb.setPiece(new Piece(0));
+			}
+		}
+		for(Piece p: npcs){
+			int px = p.getAcl2Position() % 10 - 1;
+			int py = (int) Math.floor(p.getAcl2Position() / 10);
+			if(p.getTeam() == 1){
+				pieces[k] = p;
+				k++;
+				buttonArray[px][py].setPiece(p);
+			}else if(p.getTeam() == 2){
+				buttonArray[px][py].setPiece(p);
+			}
+		}
 	}
 
 	private void callACL2(){
