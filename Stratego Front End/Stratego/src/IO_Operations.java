@@ -139,12 +139,32 @@ public void writePieceData(PieceButton[][] arrData, String call) throws IOExcept
 				 for (int y = 0; y < arrData[x].length; ++y)
 				 {
 					 PieceButton button = arrData[x][y];
-					 String position = convertIntToStr(button.getArrayX(), button.getArrayY());
-					 str.append(position);
-					 str.append(" ");
-					 str.append(convertType(button.getPiece().getType()));
-					 if (!position.equals(breakPoint))
-						 str.append(" : ");
+					 
+					 if ((button.getPiece().getTeam() == 1))
+					 {
+						 String position = convertIntToStr(button.getArrayX(), button.getArrayY());
+						 str.append(position);
+						 str.append(" ");
+						 str.append(convertType(button.getPiece().getType()));
+						 if (!position.equals(breakPoint))
+							 str.append(" : ");
+					 }
+					 else if ((button.getPiece().getTeam() == 2))
+					 {
+						 String position = convertIntToStr(button.getArrayX(), button.getArrayY());
+						 str.append(position);
+						 str.append(" ");
+						 str.append(convertType(button.getPiece().getType() + 13));
+						 if (!position.equals(breakPoint))
+							 str.append(" : ");
+						 
+					 }
+					 else
+					 {
+						 
+					 }
+						 
+
 					 
 					 //System.out.println("x: " + x + " " + "y: " + y);
 					 
@@ -179,16 +199,38 @@ public void writePieceData(PieceButton[][] arrData, String call) throws IOExcept
 				 for (int y = 0; y < arrData[x].length; ++y)
 				 {
 					 PieceButton button = arrData[x][y];
-					 String position = convertIntToStr(button.getArrayX(), button.getArrayY());
-					 string.append(position);
-					 string.append(" ");
-					 string.append(convertType(button.getPiece().getType()));
-					 string.append(" ");
-					 string.append(convertType(button.getPiece().getHasMoved()));
-					 string.append(" ");
-					 string.append(convertType(button.getPiece().getIsDiscovered()));
-					 if (!position.equals(breakPoint))
-						 string.append(" : ");
+					 
+					 if ((button.getPiece().getTeam() == 1))
+					 {
+						 String position = convertIntToStr(button.getArrayX(), button.getArrayY());
+						 string.append(position);
+						 string.append(" ");
+						 string.append(convertType(button.getPiece().getType()));
+						 string.append(" ");
+						 string.append(convertType(button.getPiece().getHasMoved()));
+						 string.append(" ");
+						 string.append(convertType(button.getPiece().getIsDiscovered()));
+						 if (!position.equals(breakPoint))
+							 string.append(" : ");
+					 }
+					 else if ((button.getPiece().getTeam() == 2))
+					 {
+						 String position = convertIntToStr(button.getArrayX(), button.getArrayY());
+						 string.append(position);
+						 string.append(" ");
+						 string.append(convertType(button.getPiece().getType()+13));
+						 string.append(" ");
+						 string.append(convertType(button.getPiece().getHasMoved()));
+						 string.append(" ");
+						 string.append(convertType(button.getPiece().getIsDiscovered()));
+						 if (!position.equals(breakPoint))
+							 string.append(" : ");
+						
+					 }
+					 else
+					 {
+						 
+					 }
 					
 					 
 				 }
@@ -214,27 +256,42 @@ public void writePieceData(PieceButton[][] arrData, String call) throws IOExcept
 	
 	public Piece splitBoardTokens(String token){
 		
-		int team = 1; //team parameter might be added to recognize ai team
 		StringTokenizer st = new StringTokenizer(token, " ");
 		String p = st.nextToken();
 		int position = convertStrToInt(p);
 		String t = st.nextToken();
 		int type = convertStrToInt(t);
-		Piece piece = new Piece(type, team, position);
+		Piece piece = new Piece(type);
+		piece.setAcl2Position(position);
 		return piece;
 		
 	}
 	
 public Piece splitKnowledgeFileTokens(String token){
-	int team = 1; //team parameter might be added to recognize ai team
+ //team parameter might be added to recognize ai team
 		StringTokenizer st = new StringTokenizer(token, " ");
 		String p = st.nextToken();
 		int position = convertStrToInt(p);
 		String t = st.nextToken();
 		int type = convertStrToInt(t);
 		int hasMoved  = convertStrToInt(st.nextToken());
+		boolean hm;
+		if (hasMoved == 0)
+			hm = false;
+		else
+			hm = true;
+	
+			
 		int isDiscovered = convertStrToInt(st.nextToken());
-		Piece piece = new Piece(type, team, isDiscovered, hasMoved, position);
+		boolean id;
+		if (isDiscovered== 0)
+			id = false;
+		else
+			id = true;
+		Piece piece = new Piece(type);
+		piece.setIsDiscovered(id);
+		piece.setHasMoved(hm);
+		piece.setAcl2Position(position);
 		return piece;
 		
 	}
