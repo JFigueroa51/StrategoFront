@@ -285,8 +285,19 @@ public class Board extends JPanel {
 	private void updateBoard(Piece[][] npcs){
 		//TODO
 	}
+
 	private void callACL2(){
-		
+
+		System.out.println("Call ACL2");
+
+		ProcessBuilder pb = new ProcessBuilder("C:/ExecutablePathHere");	
+
+		// May need to put this in Syncronized(this) {...} block, not sure.
+        try {
+          	Process p = pb.start();
+        } catch (final IOException e) {
+        	e.printStackTrace();
+        }
 	}
 	public PieceButton[][] getButtonArray(){
 		return this.buttonArray;
